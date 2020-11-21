@@ -467,3 +467,61 @@ $space-width: 18px;
     text-overflow: ellipsis;
     line-height: 20px;
 }
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.flex-between {
+  justify-content: space-between;
+}
+.flex-align {
+  display: flex;
+  align-items: center;
+}
+
+.select_cursor {
+  cursor: pointer;
+}
+// 文字大小
+.font_12 {
+  font-size: 12px;
+}
+.font_14 {
+  font-size: 14px;
+}
+.font_16 {
+  font-size: 16px;
+}
+// 文字颜色
+.font_light_yellow {
+  color: #f7ba2a !important;
+}
+.font_light_blue {
+  color: #0bb2d4 !important;
+}
+.font_success {
+  color: #67C23A !important;
+}
+.font_warning {
+  color: #E6A23C !important;
+}
+.font_info {
+  color: #909399 !important;
+}
+// 背景颜色
+.bg_light_blue {
+  background: #0bb2d4;
+}
+.bg_success {
+  background: #67C23A;
+}
+.bg_warning {
+  background: #E6A23C;
+}
+.bg_info {
+  background: #909399;
+}

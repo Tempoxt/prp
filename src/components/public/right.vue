@@ -45,8 +45,8 @@
 
 <script>
 
-  import org from '@/components/public/org'
-  import employeeTable from '@/components/public/employeeTable'
+  import org from '@/components/public/tree/org'
+  import employeeTable from '@/components/public/table/employeeTable'
   import rightTable from '@/components/public/rightTable'
   import qs from 'qs'
   import axios from 'axios'

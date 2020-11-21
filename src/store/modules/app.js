@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie'
+import qs from 'qs'
 import * as api_common from '@/api/common'
+const require_info = 'require_info'
 const app = {
   getters: {
     sideBarMenu(state) {
@@ -19,6 +21,10 @@ const app = {
     },
     getOriginDoc(state) {
       return state.originDoc
+    },
+    get_require_info(state) {
+      console.log(sessionStorage.getItem(require_info))
+      return state.require_info
     }
   },
   state: {
@@ -34,7 +40,9 @@ const app = {
     menuList: null,
     currentMenuKey: '',
     appType:+window.location.port === 8999 ? 'labor' :'erp',
-    originDoc: {}
+    originDoc: {},
+    // 需求信息
+    require_info: qs.parse(sessionStorage.getItem(require_info))
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -73,6 +81,12 @@ const app = {
     },
     SET_ORIGIN_DOC(state, obj) {
       state.originDoc = obj
+    },
+    SET_REQUIRE_INFO(state, obj) {
+      return sessionStorage.setItem(require_info, qs.stringify(obj))
+    },
+    GET_REQUIRE_INFO(state) {
+      return qs.parse(sessionStorage.getItem(require_info))
     }
   },
   actions: {
@@ -95,7 +109,14 @@ const app = {
     },
     setOriginDoc({ commit }, item) {
       commit('SET_ORIGIN_DOC', item)
+    },
+    set_require_info({ commit }, item) {
+      commit('SET_REQUIRE_INFO', item)
+    },
+    get_require_info({ commit }) {
+      commit('GET_REQUIRE_INFO')
     }
+    
   }
 }
 

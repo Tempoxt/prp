@@ -2,8 +2,7 @@
   <!-- <el-scrollbar wrap-class="scrollbar-wrapper" class="scroll"> -->
   <div style="padding:20px" class="h-full">
     <div v-if="'showSearch' in option" class="side-header">
-      <el-input size="mini" placeholder="快速查找" v-model="option.search.text" class="input">
-        <i slot="suffix" class="el-input__icon el-icon-search"></i>
+      <el-input size="mini" placeholder="快速查找" v-model="option.search.text" class="input" suffix-icon="el-icon-search">
       </el-input>
 
       <el-button v-if="operate" circle size="mini" class="circle" @click="handlerCb(option.search.add.func)">
@@ -11,7 +10,7 @@
       </el-button>
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper" class="scroll">
-      <el-tree v-if="treeShow" ref="tree2" class="tree" :data="option.treeData.data" :props="option.treeData.treeProps"
+      <el-tree v-if="treeShow" ref="tree" class="tree" :data="option.treeData.data" :props="option.treeData.treeProps"
         :show-checkbox="option.treeData.checkbox" :default-expanded-keys="option.treeData.expandedArr" :node-key="option.treeData.nodeKey"
         :filter-node-method="option.treeData.filterMethod" :highlight-current="option.treeData.highlightCurrent"
         :check-on-click-node="option.treeData.checkOnClick" @node-click="option.treeData.nodeClick" @check="checkFunc"
@@ -65,7 +64,7 @@
     },
     watch: {
       filterText(val) {
-        this.$refs.tree2.filter(val);
+        this.$refs.tree.filter(val);
       }
     },
     computed: {
@@ -116,7 +115,7 @@
       console.log(this.option)
       if ('defaultKey' in this.option.treeData) {
         setTimeout(() => {
-          this.$refs.tree2.setCurrentKey(this.option.treeData.defaultKey)
+          this.$refs.tree.setCurrentKey(this.option.treeData.defaultKey)
         }, 200)
       }
     }
@@ -147,12 +146,11 @@
   .scroll {
     height: calc(100% - 30px);
     width: 100%;
-
     /deep/ .scrollbar-wrapper {
       overflow-x: hidden;
     }
   }
-
+  
   .input {
     width: 200px;
   }
@@ -162,5 +160,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+  }
+  /deep/.el-icon-circle-close, /deep/.el-icon-circle-check {
+    display: none;
   }
 </style>

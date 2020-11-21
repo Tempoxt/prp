@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/views/layout/layout'
+import front from './routers/front'
 
 Vue.use(Router)
 
 let asyncRoutes = [
+  ...front
 ]
 
 let router = new Router({
@@ -17,26 +19,7 @@ let router = new Router({
         requiresAuth: true,
         title: '面板'
       },
-      children: [
-        {
-          name: '图例集合',
-          path: '/home',
-          component: () => import('@/views/default/home'),
-          meta: {
-            requiresAuth: true,
-            title: '图例集合'
-          }
-        },
-        {
-          name: '富文本',
-          path: '/rich_text',
-          component: () => import('@/views/default/rich'),
-          meta: {
-            requiresAuth: true,
-            title: '富文本'
-          }
-        }
-      ]
+      children: asyncRoutes
     },
 
     {

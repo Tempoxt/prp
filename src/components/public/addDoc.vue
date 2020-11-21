@@ -110,7 +110,7 @@
 </template>>
 
 <script>
-import org from "@/components/public/org";
+import org from "@/components/public/tree/org";
 import qs from "qs";
 import axios from "axios";
 

@@ -12,41 +12,74 @@
     <!-- <el-menu-item>
       <span slot="title">文档</span>
     </el-menu-item> -->
-    <template>
-      <router-link  v-for="(item, index) in menusList" :key="index" :to="item.route" >
+    <template v-if="isNest">
+      <div v-for="(item, index) in items" :key="index">
+        <router-link
+          v-if="!('child' in item) || (item.child.length === 0)"
+          :to="item.route"
+        >
           <el-menu-item :index="item.route">
-            <i class="icon iconfont" :class="[item.icon]" style="margin-right:10px" ></i>
-            <span slot="title">{{item.title}}</span>
+            <i
+              class="icon iconfont"
+              :class="[item.icon]"
+              style="margin-right: 10px"
+            ></i>
+            <span slot="title">{{ item.title }}</span>
           </el-menu-item>
-      </router-link>
-       <!-- <el-menu-item index="2-1">选项1</el-menu-item>
-      <el-menu-item index="2-2">选项2</el-menu-item>
-      <el-menu-item index="2-3">选项3</el-menu-item> -->
+        </router-link>
+        <el-submenu v-else :index="item.title">
+          <template slot="title">
+            <i
+              class="icon iconfont"
+              :class="[item.icon]"
+              style="margin-right: 10px"
+            ></i>
+            <span>{{ item.title }}</span>
+          </template>
+          <sidebar-item
+            :is-nest="true"
+            :items="item.child"
+            :key="item.child.route"
+            class="nest-menu"
+          />
+        </el-submenu>
+      </div>
     </template>
-    <!-- <el-submenu v-else ref="submenu" :index="resolvePath(item.url)">
-      <template slot="title">
-        <item v-if="item" :icon="item.icon" :title="item.name"/>
-      </template>
-
-      <template v-for="child in item.subs" v-if="!child.hidden&&item.subs">
-       
-        <sidebar-item
-          v-if="child.subs&&child.subs.length>0"
-          :is-nest="true"
-          :item="child"
-          :key="child.url"
-          :base-path="$route['matched'][0].path"
-          class="nest-menu"
-          :parentRoute="!!$route"
-        />
-        
-        <app-link v-else :to="resolvePath(child.url)" :key="child.name">
-          <el-menu-item :index="resolvePath(child.url)">
-            <item v-if="child" :icon="child.icon" :title="child.name"/>
+    <template v-else>
+      <div v-for="(item, index) in menusList" :key="index">
+        <router-link
+          v-if="!('child' in item) || (item.child.length === 0)"
+          :to="item.route"
+        >
+          <el-menu-item :index="item.route">
+            <i
+              class="icon iconfont"
+              :class="[item.icon]"
+              style="margin-right: 10px"
+            ></i>
+            <span slot="title">{{ item.title }}</span>
           </el-menu-item>
-        </app-link>
-      </template>
-    </el-submenu> -->
+        </router-link>
+        <template v-else>
+          <el-submenu :index="item.title">
+            <template slot="title">
+              <i
+                class="icon iconfont"
+                :class="[item.icon]"
+                style="margin-right: 10px"
+              ></i>
+              <span>{{ item.title }}</span>
+            </template>
+            <sidebar-item
+              :is-nest="true"
+              :items="item.child"
+              :key="item.child.route"
+              class="nest-menu"
+            />
+          </el-submenu>
+        </template>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -56,8 +89,8 @@ import { isExternal } from "@/utils";
 import Item from "./Item";
 import AppLink from "./Link";
 import FixiOSBug from "./FixiOSBug";
-import auth from '@/utils/auth'
-import qs from 'qs'
+import auth from "@/utils/auth";
+import qs from "qs";
 
 export default {
   name: "SidebarItem",
@@ -65,31 +98,87 @@ export default {
   mixins: [FixiOSBug],
   props: {
     // route object
-    // item: {
-    //   type: Object,
-    //   required: true
-    // },
+    items: {
+      type: Array,
+      default: () => [],
+    },
     isNest: {
       type: Boolean,
-      default: false
+      default: false,
     },
     basePath: {
       type: String,
-      default: ""
+      default: "",
     },
-    parentRoute:{}
+    parentRoute: {},
   },
   data() {
     return {
       onlyOneChild: null,
       menusList: [
-        { icon: 'icon-bumenwendang', title: '图例集合', act: false, route: '/home' },
-        { icon: 'icon-bumenwendang', title: '富文本', act: false, route: '/rich_text' }
-      ]
+        {
+          icon: "icon-bumenwendang",
+          title: "组件",
+          act: false,
+          child: [
+            {
+              icon: "icon-bumenwendang",
+              title: "图例集合",
+              act: false,
+              route: "/home",
+            },
+            {
+              icon: "icon-bumenwendang",
+              title: "富文本",
+              act: false,
+              route: "/rich_text",
+            },
+          ],
+        },
+        {
+          icon: "icon-bumenwendang",
+          title: "工作台",
+          act: false,
+          child: [
+            {
+              icon: "icon-bumenwendang",
+              title: "我的任务",
+              act: false,
+              route: "/myWork",
+            }
+          ],
+        },
+        {
+          icon: "icon-bumenwendang",
+          title: "项目需求",
+          act: false,
+          route: "/projectRequirement",
+          child: [
+            {
+              icon: "icon-bumenwendang",
+              title: "总览",
+              act: false,
+              route: "/allShow",
+            },
+            {
+              icon: "icon-bumenwendang",
+              title: "项目表单",
+              act: false,
+              route: "/itemForm",
+            },
+            {
+              icon: "icon-bumenwendang",
+              title: "项目需求",
+              act: false,
+              route: "/projectRequirement",
+            }
+          ],
+        },
+      ],
     };
   },
   created() {
-    console.log(qs.parse(auth.getLogInfo()))
+    console.log(qs.parse(auth.getLogInfo()));
   },
   computed: {
     // menusList() {

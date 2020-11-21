@@ -41,7 +41,7 @@
 
 <script>
 
-  import employeeTable from '@/components/public/employeeTable'
+  import employeeTable from '@/components/public/table/employeeTable'
   import qs from 'qs'
   import axios from 'axios'
   import auth from '@/utils/auth'

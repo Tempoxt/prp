@@ -27,7 +27,7 @@
 <script>
 import * as api_common from "@/api/common";
 import auth from '@/utils/auth'
-import org from '@/components/public/org'
+import org from '@/components/public/tree/org'
 
 export default {
   components: {
